@@ -1,0 +1,92 @@
+[04-Jun-2020 08:22:10 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('post/')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 132
+[04-Jun-2020 08:22:10 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 132
+[04-Jun-2020 08:22:25 Europe/Berlin] Uncaught exception: 'Exception' with message 'Controller class App\Controllers\Post not found'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('post/index')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 129
+[04-Jun-2020 08:22:25 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 132
+[04-Jun-2020 08:23:41 Europe/Berlin] Uncaught exception: 'Exception' with message 'Controller class App\Controllers\Post not found'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('post/index')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 129
+[04-Jun-2020 08:24:01 Europe/Berlin] Uncaught exception: 'Exception' with message 'Controller class App\Controllers\Post not found'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('post/index')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 129
+[04-Jun-2020 08:24:15 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:24:32 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:25:16 Europe/Berlin] Uncaught exception: 'Exception' with message 'Controller class App\Controllers\Post not found'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('post/index')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 130
+[04-Jun-2020 08:25:31 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:26:27 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:26:43 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 134
+[04-Jun-2020 08:27:28 Europe/Berlin] Uncaught exception: 'ErrorException' with message 'Use of undefined constant haha - assumed 'haha' (this will throw an Error in a future version of PHP)'
+Stack trace: #0 C:\server.io\App\Controllers\Posts.php(23): Lib\Error::errorHandler(2, 'Use of undefine...', 'C:\\server.io\\Ap...', 23, Array)
+#1 [internal function]: App\Controllers\Posts->indexAction()
+#2 C:\server.io\Core\Controller.php(48): call_user_func_array(Array, Array)
+#3 C:\server.io\Core\Router.php(124): Core\Controller->__call('index', Array)
+#4 C:\server.io\public\index.php(46): Core\Router->dispatch('posts/index')
+#5 {main}
+Thrown in 'C:\server.io\App\Controllers\Posts.php' on line 23
+[04-Jun-2020 08:28:27 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:29:22 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:30:17 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:30:19 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('posts/index123')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:31:17 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:32:15 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:33:38 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:35:57 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[04-Jun-2020 08:44:53 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133

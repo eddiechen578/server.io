@@ -1,0 +1,14 @@
+{
+    "require": {
+        "twig/twig": "~1.0",
+      "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+             "Core\\": "Core/",
+             "App\\": "App/",
+             "Config\\": "Config/",
+             "Lib\\": "Lib/"
+        }
+    }
+}

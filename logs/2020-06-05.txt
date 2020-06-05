@@ -1,0 +1,16 @@
+[05-Jun-2020 04:31:18 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\server.io\public\index.php(46): Core\Router->dispatch('posts')
+#1 {main}
+Thrown in 'C:\server.io\Core\Router.php' on line 133
+[05-Jun-2020 04:31:35 Europe/Berlin] Uncaught exception: 'ErrorException' with message 'Declaration of App\Models\Post::getAll() should be compatible with Core\Model::getAll($type = NULL, $argument = NULL)'
+Stack trace: #0 C:\server.io\App\Models\Post.php(12): Lib\Error::errorHandler(2, 'Declaration of ...', 'C:\\server.io\\Ap...', 12, Array)
+#1 C:\server.io\vendor\composer\ClassLoader.php(444): include('C:\\server.io\\Ap...')
+#2 C:\server.io\vendor\composer\ClassLoader.php(322): Composer\Autoload\includeFile('C:\\server.io\\ve...')
+#3 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Models\\Post')
+#4 C:\server.io\App\Controllers\Posts.php(23): spl_autoload_call('App\\Models\\Post')
+#5 [internal function]: App\Controllers\Posts->indexAction()
+#6 C:\server.io\Core\Controller.php(49): call_user_func_array(Array, Array)
+#7 C:\server.io\Core\Router.php(124): Core\Controller->__call('index', Array)
+#8 C:\server.io\public\index.php(46): Core\Router->dispatch('posts/index')
+#9 {main}
+Thrown in 'C:\server.io\App\Models\Post.php' on line 12
