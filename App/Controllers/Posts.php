@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use \Core\View;
-use App\Models\Post;
+use App\Models\Post\post;
 
+use App\Models\Log\log;
 /**
  * Posts controller
  *
@@ -20,9 +20,8 @@ class Posts extends \Core\Controller
      */
     public function indexAction()
     {
-       $post = new Post();
-       $data = $post->getData();
 
+         dd(post::getData());
     }
 
     /**

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Models;
+namespace App\Models\Log;
 
 use Config\Database;
 
-class Log extends \Core\Model
+class DB extends \Core\Model
 {
     public static
         $database = Database::log,

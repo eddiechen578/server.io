@@ -15,7 +15,6 @@ abstract class Model
     private static $connection_pool = [];
 
     protected $prefix = null;
-    protected $pdo = null;
     protected $select = '*';
     protected $where = null;
     protected $limit = null;
@@ -498,7 +497,9 @@ abstract class Model
         if ($type === true) {
             return $query;
         }
+
         $query = $this->query($query, false);
+
         if ($query) {
             $this->insertId = self::getDB()->lastInsertId();
             return $this->insertId();
@@ -526,6 +527,7 @@ abstract class Model
         if ($type === true) {
             return $query;
         }
+
         return $this->query($query, false);
     }
 
@@ -663,51 +665,32 @@ abstract class Model
             }
         }
         $type = $this->getFetchType($type);
-//        $cache = false;
 
-//        if (! is_null($this->cache) && $type !== \PDO::FETCH_CLASS) {
-//            $cache = $this->cache->getCache($this->query, $type === PDO::FETCH_ASSOC);
-//        }
-//        if (! $cache && $str) {
-//
+        if($str) {
+
             $sql = self::getDB()->query($this->query);
-            self::logSql($this->query);
 
             if ($sql) {
+
                 $this->numRows = $sql->rowCount();
                 if (($this->numRows > 0)) {
+
                     if ($type === \PDO::FETCH_CLASS) {
                         $sql->setFetchMode($type, $argument);
                     } else {
                         $sql->setFetchMode($type);
                     }
+
                     $this->result = $all ? $sql->fetchAll() : $sql->fetch();
                 }
             }
+        }else{
+            $this->result = self::getDB()->exec($this->query);
+
+        }
         $this->queryCount++;
+
         return $this->result;
-//                if (! is_null($this->cache) && $type !== \PDO::FETCH_CLASS) {
-//                    $this->cache->setCache($this->query, $this->result);
-//                }
-//                $this->cache = null;
-//            } else {
-//                $this->cache = null;
-//                $this->error = self::getDB()->errorInfo()[2];
-//                $this->error();
-//            }
-//        } elseif ((! $cache && ! $str) || ($cache && ! $str)) {
-//            $this->cache = null;
-//            $this->result = self::getDB()->exec($this->query);
-//            if ($this->result === false) {
-//                $this->error = self::getDB()->errorInfo()[2];
-//                $this->error();
-//            }
-//        } else {
-//            $this->cache = null;
-//            $this->result = $cache;
-//            $this->numRows = count($this->result);
-//        }
-//        $this->queryCount++;
 
     }
 
@@ -716,6 +699,7 @@ abstract class Model
         if ($data === null) {
             return 'NULL';
         }
+
         return self::getDB()->quote(trim($data));
     }
 
@@ -729,15 +713,14 @@ abstract class Model
         return $this->query;
     }
 
-//    public function __destruct()
-//    {
-//        $this->pdo = null;
-//    }
+    public static function quote($value)
+    {
+        return self::getDB()->quote(trim($value));
+    }
 
     protected function reset()
     {
         $this->select = '*';
-//        $this->from = null;
         $this->where = null;
         $this->limit = null;
         $this->offset = null;
@@ -768,26 +751,12 @@ abstract class Model
         return $this;
     }
 
-
-
-    private static function logSql($query)
-    {
-        if (!isset(static::$database))
-            return;
-
-        self::$connection_pool[static::$database]['reuse_count']++;
-
-        self::$connection_pool[static::$database]['sqls'][] = $query;
-        if (sizeof(self::$connection_pool[static::$database]['sqls']) > 500)
-            array_shift(self::$connection_pool[static::$database]['sqls']);
-    }
-
     /**
      * Get the PDO database connection
      *
      * @return mixed
      */
-    protected static function getDB()
+    public static function getDB()
     {
         $init = function () {
             $instance = new Pdo(Database::settings()[static::$database]);

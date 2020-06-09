@@ -2,7 +2,7 @@
 
 namespace Lib;
 
-class pdo
+class Pdo
 {
     private $pdo = null;
 
@@ -49,9 +49,10 @@ class pdo
     {
         $return = $this->pdo->exec($sql);
 
-        if($this->errorCode() !== '00000'){
-
+        if ($this->errorCode() !== '00000') {
+            \App\Models\Log\log::setException(\lib\exception::LEVEL_ERROR, $this->errorInfo()[2] . ' in "' . $sql . '".');
         }
+        return $return;
     }
 
     function fetchColumn($sql)
@@ -71,7 +72,32 @@ class pdo
     {
         $result = $this->pdo->query($sql);
 
+        if ($this->errorCode() !== '00000') {
+
+            \App\Models\Log\log::setException(\Lib\exception::LEVEL_ERROR, $this->errorInfo()[2] . ' in "' . $sql . '".');
+        }
+
         return $result;
+    }
+
+    function lastInsertId()
+    {
+        return $this->pdo->lastInsertId();
+    }
+
+    function quote($var, $quote = true)
+    {
+        if ($var === null) {
+            $return = 'NULL';
+        } elseif ($var === true) {
+            $return = 'TRUE';
+        } elseif ($var === false) {
+            $return = 'FALSE';
+        } else {
+            $return = (is_string($var) && $quote) ? $this->pdo->quote($var) : $var;
+        }
+
+        return $return;
     }
 
 }

@@ -41,7 +41,7 @@ class Exception
 
         $trace = array_reverse($trace); // reverse array to make steps line up chronologically
 
-        $trace = array_slice($trace, 1, -2);//remove first {main} and last two (\userlog\Model::setException and call to this method)
+        $trace = array_slice($trace, 1, -2);//remove first {main} and last two (\userlog\log::setException and call to this method)
 
         $length = count($trace);
 

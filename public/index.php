@@ -30,15 +30,18 @@ error_reporting(E_ALL);
 set_error_handler('Lib\Error::errorHandler');
 set_exception_handler('Lib\Error::exceptionHandler');
 
+
+\App\Models\Log\DB::$table = \App\Models\Log\DB::$database . '.' . date('Ymd');
+
 /**
  * Routing
  */
 $router = new Core\Router();
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('{controller}/{action}');
+$router->add('api/{controller}/{action}');
 
-$router->add('{controller}/{id:\d+}/{action}');
+$router->add('api/{controller}/{id:\d+}/{action}');
 
 $router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
 
