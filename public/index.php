@@ -1,9 +1,5 @@
 <?php
 
-function dd($data)
-{
-    echo '<pre>' . var_export($data, true) . '</pre>';
-}
 /**
  * Front controller
  *
@@ -15,9 +11,32 @@ function dd($data)
  */
 require '../vendor/autoload.php';
 
-//$pdo = (new \Lib\Pdo(\Config\Database::settings()['vue_app']));
-//dd($pdo->fetchColumn('SELECT @@wait_timeout;'));
-//exit;
+
+if (! function_exists('dd')) {
+    /**
+     * Dump the passed variables and end the script.
+     *
+     * @param  mixed
+     * @return void
+     */
+    function dd()
+     {
+        array_map(function ($value) {
+            if (class_exists( \Symfony\Component\VarDumper\Dumper\CliDumper::class)) {
+
+                $dumper = 'cli' === PHP_SAPI ?
+                    new \Symfony\Component\VarDumper\Dumper\CliDumper :
+                    new \Symfony\Component\VarDumper\Dumper\HtmlDumper;
+                $dumper->dump((new \Symfony\Component\VarDumper\Cloner\VarCloner)->cloneVar($value));
+            } else {
+                var_dump($value);
+            }
+        }, func_get_args());
+        die(1);
+    }
+}
+
+
 /**
  * Twig
  */
@@ -32,6 +51,10 @@ set_exception_handler('Lib\Error::exceptionHandler');
 
 
 \App\Models\Log\DB::$table = \App\Models\Log\DB::$database . '.' . date('Ymd');
+
+header('Access-Control-Allow-Origin: http://localhost:8080');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept');
 
 /**
  * Routing

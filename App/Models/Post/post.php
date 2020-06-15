@@ -13,7 +13,7 @@ class post
 
         $data = $post->select('post_id')
                      ->get();
-        dd($data);exit;
+
         return $data;
     }
 

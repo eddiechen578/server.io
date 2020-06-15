@@ -12,7 +12,6 @@ class log
 
     private static function createLogTable()
     {
-//        $string0 = date('Ymd', strtotime('+1 day'));
         $string0 = date('Ymd');
         DB::getDB()->exec(
             "CREATE TABLE " . DB::$database . "." . $string0 . " (

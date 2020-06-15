@@ -5,7 +5,7 @@ namespace Core;
 /**
  * Base controller
  *
- * PHP version 5.4
+ * PHP version 7.3
  */
 abstract class Controller
 {
@@ -41,11 +41,16 @@ abstract class Controller
      */
     public function __call($name, $args)
     {
-
         $method = $name . 'Action';
 
         if (method_exists($this, $method)) {
             if ($this->before() !== false) {
+                if(isset($this->route_params['id'])){
+                    $args = [
+                       'id' => $this->route_params['id']
+                     ];
+                }
+
                 call_user_func_array([$this, $method], $args);
                 $this->after();
             }

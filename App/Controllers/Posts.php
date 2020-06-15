@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Post\post;
-
-use App\Models\Log\log;
+use Lib\Redis;
+use App\Models\User\user;
 /**
  * Posts controller
  *
@@ -20,8 +20,21 @@ class Posts extends \Core\Controller
      */
     public function indexAction()
     {
+        $fields = [
+            'user_id',
+            'name',
+            'tel',
+            'email',
+            'sex'
+        ];
 
-         dd(post::getData());
+        $data = user::getUserFieldsFromCache(37, $fields);
+        dd($data);exit;
+    }
+
+    public function getByIdAction($id)
+    {
+        dd($id);exit;
     }
 
     /**

@@ -425,16 +425,16 @@ abstract class Model
         return $this->insertId;
     }
 
-    public function error()
-    {
-        $msg = '<h1>Database Error</h1>';
-        $msg .= '<h4>Query: <em style="font-weight:normal;">"' . $this->query . '"</em></h4>';
-        $msg .= '<h4>Error: <em style="font-weight:normal;">' . $this->error . '</em></h4>';
-        if ($this->debug === true) {
-            die($msg);
-        }
-        throw new PDOException($this->error . '. (' . $this->query . ')');
-    }
+//    public function error()
+//    {
+//        $msg = '<h1>Database Error</h1>';
+//        $msg .= '<h4>Query: <em style="font-weight:normal;">"' . $this->query . '"</em></h4>';
+//        $msg .= '<h4>Error: <em style="font-weight:normal;">' . $this->error . '</em></h4>';
+//        if ($this->debug === true) {
+//            die($msg);
+//        }
+//        throw new PDOException($this->error . '. (' . $this->query . ')');
+//    }
 
     public function get($type = null, $argument = null)
     {
@@ -609,23 +609,16 @@ abstract class Model
             return null;
         }
         $query = self::getDB()->exec($this->query);
-        if ($query === false) {
-            $this->error = self::getDB()->errorInfo()[2];
-            $this->error();
-        }
+
         return $query;
     }
 
     public function fetch($type = null, $argument = null, $all = false)
     {
-        if (is_null($this->query)) {
-            return null;
-        }
-        $query = self::getDB()->query($this->query);
-        if (! $query) {
-            $this->error = self::getDB()->errorInfo()[2];
-            $this->error();
-        }
+        $query = $this->getAll(true);
+
+        $query = self::getDB()->query($query);
+
         $type = $this->getFetchType($type);
         if ($type === \PDO::FETCH_CLASS) {
             $query->setFetchMode($type, $argument);
@@ -732,7 +725,6 @@ abstract class Model
         $this->numRows = 0;
         $this->insertId = null;
         $this->query = null;
-        $this->error = null;
         $this->result = [];
         $this->transactionCount = 0;
     }

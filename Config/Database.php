@@ -12,6 +12,7 @@ class Database
     const _prefix = 'vue_',
           app = self::_prefix . 'app',
           log = self::_prefix . 'log';
+
     /**
      * Database host
      * @var string
@@ -38,6 +39,7 @@ class Database
 
     static function settings()
     {
+
         $setting = [
 
             self::app => [
