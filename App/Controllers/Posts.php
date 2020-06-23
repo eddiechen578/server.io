@@ -20,16 +20,20 @@ class Posts extends \Core\Controller
      */
     public function indexAction()
     {
-        $fields = [
-            'user_id',
-            'name',
-            'tel',
-            'email',
-            'sex'
-        ];
+        header('Access-Control-Allow-Origin:*');
 
-        $data = user::getUserFieldsFromCache(37, $fields);
-        dd($data);exit;
+            $fields = [
+                'user_id',
+                'name',
+                'tel',
+                'email',
+                'sex'
+            ];
+
+            $data = user::getUserFieldsFromCache(37, $fields);
+
+            die(json_return_encode(1, null, $data));
+
     }
 
     public function getByIdAction($id)
