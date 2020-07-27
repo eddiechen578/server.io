@@ -19,8 +19,8 @@ class Home extends \Core\Controller
      */
     protected function before()
     {
-        //echo "(before) ";
-        //return false;
+        echo "(before) ";
+        return false;
     }
 
     /**
@@ -34,19 +34,19 @@ class Home extends \Core\Controller
     }
 
     /**
-     * Show the index page
+     * Show the indexAction page
      *
      * @return void
      */
     public function indexAction()
     {
         /*
-        View::render('Home/index.php', [
+        View::render('Home/indexAction.php', [
             'name'    => 'Dave',
             'colours' => ['red', 'green', 'blue']
         ]);
         */
-        View::renderTemplate('Home/index.html', [
+        View::renderTemplate('Home/indexAction.html', [
             'name'    => 'Dave',
             'colours' => ['red', 'green', 'blue']
         ]);

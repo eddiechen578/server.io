@@ -22,12 +22,12 @@ class Users extends \Core\Controller
     }
 
     /**
-     * Show the index page
+     * Show the indexAction page
      *
      * @return void
      */
     public function indexAction()
     {
-        echo 'User admin index';
+        echo 'User admin indexAction';
     }
 }

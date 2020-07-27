@@ -115,7 +115,7 @@ class Router
             $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {
-                $controller_object = new $controller($this->params);
+                $controller_object = new $controller($this->params, new \App\Helpers\JsonMapper(), new \App\Services\ServiceResult());
 
                 $action = $this->params['action'];
                 $action = $this->convertToCamelCase($action);
@@ -172,8 +172,8 @@ class Router
      *   localhost/?                   ''                        ''
      *   localhost/?page=1             page=1                    ''
      *   localhost/posts?page=1        posts&page=1              posts
-     *   localhost/posts/index         posts/index               posts/index
-     *   localhost/posts/index?page=1  posts/index&page=1        posts/index
+     *   localhost/posts/indexAction         posts/indexAction               posts/indexAction
+     *   localhost/posts/indexAction?page=1  posts/indexAction&page=1        posts/indexAction
      *
      * A URL of the format localhost/?page (one variable name, no value) won't
      * work however. (NB. The .htaccess file converts the first ? to a & when

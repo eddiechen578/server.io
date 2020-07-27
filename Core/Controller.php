@@ -9,13 +9,17 @@ namespace Core;
  */
 abstract class Controller
 {
-
     /**
      * Parameters from the matched route
      * @var array
      */
     protected $route_params = [];
 
+    protected $servicesNamespace;
+
+    protected $jsonMapper;
+
+    protected $result;
     /**
      * Class constructor
      *
@@ -23,9 +27,18 @@ abstract class Controller
      *
      * @return void
      */
-    public function __construct($route_params)
+    public function __construct($route_params,
+                                \Interfaces\Helpers\JsonMapperInterface $jsonMapper,
+                                \Interfaces\Services\ServiceResultInterface $result
+                                )
     {
         $this->route_params = $route_params;
+
+        $this->jsonMapper = $jsonMapper;
+
+        $this->result = $result;
+
+        $this->servicesNamespace = "\\App\\Models";
     }
 
     /**
@@ -41,22 +54,42 @@ abstract class Controller
      */
     public function __call($name, $args)
     {
+        if(isset($_REQUEST['data'])) {
+            $data = $_REQUEST['data'];
+        } else {
+            $putData = fopen("php://input", "r");
+            $data = "";
+            while($additionalData = fread($putData, 1024))
+                $data .= $additionalData;
+            fclose($putData);
+        }
+
+        if(empty($data)) {
+            $data = "{}";
+        }
+
         $method = $name . 'Action';
 
         if (method_exists($this, $method)) {
-            if ($this->before() !== false) {
+            if ($this->before($_SERVER['REQUEST_METHOD'], $data) !== false) {
                 if(isset($this->route_params['id'])){
                     $args = [
                        'id' => $this->route_params['id']
                      ];
                 }
 
-                call_user_func_array([$this, $method], $args);
-                $this->after();
+                call_user_func_array([$this, $method], array($this->result));
+
             }
         } else {
-            throw new \Exception("Method $method not found in controller " . get_class($this));
+
+            $this->result->addError("Method $method not found in controller " . get_class($this));
+//            throw new \Exception("Method $method not found in controller " . get_class($this));
         }
+
+        $result = $this->result->serialize();
+
+        $this->after($result);
     }
 
     /**
@@ -64,8 +97,27 @@ abstract class Controller
      *
      * @return void
      */
-    protected function before()
+    protected function before($requestType, $jsonData)
     {
+        list($command, $function)= $this->extractServiceName($_SERVER['REQUEST_URI']);
+
+        $requestType = ucfirst(strtolower($requestType));
+
+        $classNameRequest = $this->servicesNamespace."\\".ucfirst($command)."\\Request\\"."$requestType\\".$function;
+
+        if(!class_exists($classNameRequest)){
+          $this->result->addError("Unknown command");
+        }
+
+
+        $jsonObject = json_decode($jsonData);
+
+        if($jsonObject == FALSE) {
+            $this->result->addError("Unable to deserialize request");
+        }else{
+            $this->jsonMapper->map($jsonObject);
+        }
+
     }
 
     /**
@@ -73,7 +125,39 @@ abstract class Controller
      *
      * @return void
      */
-    protected function after()
+    protected function after($result)
     {
+
+        header("Content-Type: application/json");
+
+        echo $result;
+    }
+
+    function extractServiceName($requestUri)
+    {
+        if(strlen($requestUri) <= 5) // the request URI must contain "/api/" at least
+        {
+            return false;
+        }
+
+        $requestUri = substr($requestUri, 5); // remove "/api/"
+
+        $pos = strpos($requestUri, "?");
+        if($pos === false) {
+            $pos = strpos($requestUri, "/");
+        }
+        if($pos === false) {
+            // A service may not need any data. Therefore, we may not have ? nor / in the URI
+            return $requestUri;
+        }
+
+        $serviceName = substr($requestUri, 0, $pos);
+
+        $serviceFun = substr($requestUri, $pos + 1) . 'Action';
+
+        $serviceName = ucfirst(substr($serviceName, 0, -1));
+
+        return [$serviceName, $serviceFun];
+
     }
 }

@@ -25,19 +25,21 @@ error_reporting(E_ALL);
 set_error_handler('Lib\Error::errorHandler');
 set_exception_handler('Lib\Error::exceptionHandler');
 
-
 \App\Models\Log\DB::$table = \App\Models\Log\DB::$database . '.' . date('Ymd');
 
 //header('Access-Control-Allow-Origin: http://localhost:8080');
 //header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 //header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept');
 
+
+$result = new \App\Services\ServiceResult();
+
 /**
  * Routing
  */
 $router = new Core\Router();
 // Add the routes
-$router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('', ['controller' => 'Home', 'action' => 'indexAction']);
 $router->add('api/{controller}/{action}');
 
 $router->add('api/{controller}/{id:\d+}/{action}');

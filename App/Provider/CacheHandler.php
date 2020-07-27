@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Provider;
+namespace App\Provider;
 
 
 class CacheHandler

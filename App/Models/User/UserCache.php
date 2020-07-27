@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Models\User;
 
 use Lib\Cache\RedisHash;
 
-class UserCache extends \Provider\CacheHandler
+class UserCache extends \App\Provider\CacheHandler
 {
 
     protected $cacheKey = 'user:%d';
@@ -24,7 +23,7 @@ class UserCache extends \Provider\CacheHandler
 
     private $userHashmap;
 
-    private function __construct(\Interfaces\CacheProvider $cacheProvider, $user_id)
+    public function __construct(\Interfaces\CacheProvider $cacheProvider, $user_id)
     {
         $this->cacheKey = sprintf($this->cacheKey, $user_id);
 
