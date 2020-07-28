@@ -73,7 +73,7 @@ abstract class Controller
         $method = $name . 'Action';
 
         if (method_exists($this, $method)) {
-                if($this->before($_SERVER['REQUEST_METHOD'], $data) !== FALSE) {
+                if($this->before($_SERVER['REQUEST_METHOD'], $data)) {
 
                     if (isset($this->route_params['id'])) {
                         $args = [
@@ -109,6 +109,8 @@ abstract class Controller
 
         if(!class_exists($classNameRequest)){
             $this->result->addError("Unknown command");
+
+            return false;
         }else{
 
             $jsonObject = json_decode($jsonData);
@@ -117,15 +119,20 @@ abstract class Controller
 
             if($jsonObject == FALSE) {
                 $this->result->addError("Unable to deserialize request");
+
+                return false;
             }else{
                 $dataObject = $this->jsonMapper->map($jsonObject, $dataObject);
 
-                $validateClass = $this->servicesNamespace."\\".ucfirst($command)."\\user";
-                $validateClass::validate($dataObject, $this->result);
+                $validateClass = $this->servicesNamespace."\\".ucfirst($command)."\\" . $command;
+                $validate = '__validateOf' . ucfirst($function);
+                $validateClass::$validate($dataObject, $this->result);
 
                 $this->request = $dataObject;
             }
          }
+
+        return true;
     }
 
     /**

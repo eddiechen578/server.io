@@ -28,7 +28,7 @@ class user
             return $c_value;
         }
 
-        static function insertUser($insert)
+        static function insert($insert)
         {
             $user = new DB();
 
@@ -37,7 +37,7 @@ class user
             return $user_id;
         }
 
-        static function validate($requestObject, \Interfaces\Services\ServiceResultInterface &$serviceResult)
+        static function __validateOfIndexAction(&$requestObject, \Interfaces\Services\ServiceResultInterface &$serviceResult)
         {
 
             if(strlen($requestObject->getName()) == 0){
@@ -54,6 +54,12 @@ class user
 
             if(strlen($requestObject->getPassword()) == 0){
                 $serviceResult->addInputError("password", "password is required");
+            }
+
+            if(strlen($requestObject->getPassword()) > 0){
+                $pwd = $requestObject->getPassword();
+
+                $requestObject->setPassword(password_hash($pwd, PASSWORD_DEFAULT));
             }
 
             if(strlen($requestObject->getSex()) == 0){
