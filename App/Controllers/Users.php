@@ -7,8 +7,20 @@ namespace App\Controllers;
 class Users extends \Core\Controller
 {
 
-    public function indexAction($request, \Interfaces\Services\ServiceResultInterface $result)
+    public function indexAction($requestObject, \Interfaces\Services\ServiceResultInterface $result)
     {
-        dd($request->getName());exit;
+
+        $insert = [
+            'name' => $requestObject->getName(),
+            'tel' => $requestObject->getTel(),
+            'email' => $requestObject->getEmail(),
+            'password' => $requestObject->getPassword(),
+            'sex' => $requestObject->getSex(),
+            'lv' => $requestObject->getLv()
+        ];
+
+        $getId = \App\Models\User\user::insertUser($insert);
+
+        $result->setData("{'id' : '". $getId ."', statusMessage' : 'The user was added successfully'}");
     }
 }

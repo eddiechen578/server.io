@@ -28,14 +28,41 @@ class user
             return $c_value;
         }
 
+        static function insertUser($insert)
+        {
+            $user = new DB();
+
+            $user_id = $user->insert($insert);
+
+            return $user_id;
+        }
+
         static function validate($requestObject, \Interfaces\Services\ServiceResultInterface &$serviceResult)
         {
-            if(strlen($requestObject->getUser_id()) == 0){
-                $serviceResult->addInputError("user_id", "user_id is required");
-            }
 
             if(strlen($requestObject->getName()) == 0){
                 $serviceResult->addInputError("name", "name is required");
             }
+
+            if(strlen($requestObject->getTel()) == 0){
+                $serviceResult->addInputError("tel", "tel is required");
+            }
+
+            if(strlen($requestObject->getEmail()) == 0){
+                $serviceResult->addInputError("email", "email is required");
+            }
+
+            if(strlen($requestObject->getPassword()) == 0){
+                $serviceResult->addInputError("password", "password is required");
+            }
+
+            if(strlen($requestObject->getSex()) == 0){
+                $serviceResult->addInputError("sex", "sex is required");
+            }
+
+            if(strlen($requestObject->getLv()) == 0){
+                $serviceResult->addInputError("lv", "lv is required");
+            }
+
         }
 }

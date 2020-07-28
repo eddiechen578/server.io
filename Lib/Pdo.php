@@ -47,10 +47,11 @@ class Pdo
 
     function exec($sql)
     {
+
         $return = $this->pdo->exec($sql);
 
         if ($this->errorCode() !== '00000') {
-            \App\Models\Log\log::setException(\lib\exception::LEVEL_ERROR, $this->errorInfo()[2] . ' in "' . $sql . '".');
+            \App\Models\Log\log::setException(\Lib\exception::LEVEL_ERROR, $this->errorInfo()[2] . ' in "' . $sql . '".');
         }
         return $return;
     }
