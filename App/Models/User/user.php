@@ -7,7 +7,6 @@ use App\Models\User\DB;
 
 class user
 {
-
         static function getUserFieldsFromCache($user_id, $fields)
         {
 
@@ -27,5 +26,16 @@ class user
             }
 
             return $c_value;
+        }
+
+        static function validate($requestObject, \Interfaces\Services\ServiceResultInterface &$serviceResult)
+        {
+            if(strlen($requestObject->getUser_id()) == 0){
+                $serviceResult->addInputError("user_id", "user_id is required");
+            }
+
+            if(strlen($requestObject->getName()) == 0){
+                $serviceResult->addInputError("name", "name is required");
+            }
         }
 }

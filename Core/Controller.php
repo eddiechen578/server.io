@@ -20,6 +20,8 @@ abstract class Controller
     protected $jsonMapper;
 
     protected $result;
+
+    protected $request;
     /**
      * Class constructor
      *
@@ -71,20 +73,20 @@ abstract class Controller
         $method = $name . 'Action';
 
         if (method_exists($this, $method)) {
-            if ($this->before($_SERVER['REQUEST_METHOD'], $data) !== false) {
-                if(isset($this->route_params['id'])){
-                    $args = [
-                       'id' => $this->route_params['id']
-                     ];
+                if($this->before($_SERVER['REQUEST_METHOD'], $data) !== FALSE) {
+
+                    if (isset($this->route_params['id'])) {
+                        $args = [
+                            'id' => $this->route_params['id']
+                        ];
+                    }
+
+                    call_user_func_array([$this, $method], array($this->request, $this->result));
+
                 }
 
-                call_user_func_array([$this, $method], array($this->result));
-
-            }
         } else {
-
             $this->result->addError("Method $method not found in controller " . get_class($this));
-//            throw new \Exception("Method $method not found in controller " . get_class($this));
         }
 
         $result = $this->result->serialize();
@@ -106,18 +108,24 @@ abstract class Controller
         $classNameRequest = $this->servicesNamespace."\\".ucfirst($command)."\\Request\\"."$requestType\\".$function;
 
         if(!class_exists($classNameRequest)){
-          $this->result->addError("Unknown command");
-        }
-
-
-        $jsonObject = json_decode($jsonData);
-
-        if($jsonObject == FALSE) {
-            $this->result->addError("Unable to deserialize request");
+            $this->result->addError("Unknown command");
         }else{
-            $this->jsonMapper->map($jsonObject);
-        }
 
+            $jsonObject = json_decode($jsonData);
+
+            $dataObject = new $classNameRequest();
+
+            if($jsonObject == FALSE) {
+                $this->result->addError("Unable to deserialize request");
+            }else{
+                $dataObject = $this->jsonMapper->map($jsonObject, $dataObject);
+
+                $validateClass = $this->servicesNamespace."\\".ucfirst($command)."\\user";
+                $validateClass::validate($dataObject, $this->result);
+
+                $this->request = $dataObject;
+            }
+         }
     }
 
     /**
