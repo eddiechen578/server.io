@@ -75,14 +75,13 @@ abstract class Controller
         if (method_exists($this, $method)) {
                 if($this->before($_SERVER['REQUEST_METHOD'], $data)) {
 
-                    if (isset($this->route_params['id'])) {
-                        $args = [
-                            'id' => $this->route_params['id']
-                        ];
-                    }
+//                    if (isset($this->route_params['id'])) {
+//                        $args = [
+//                            'id' => $this->route_params['id']
+//                        ];
+//                    }
 
                     call_user_func_array([$this, $method], array($this->request, $this->result));
-
                 }
 
         } else {

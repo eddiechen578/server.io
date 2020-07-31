@@ -27,6 +27,9 @@ set_exception_handler('Lib\Error::exceptionHandler');
 
 \App\Models\Log\DB::$table = \App\Models\Log\DB::$database . '.' . date('Ymd');
 
+define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
+
+
 //header('Access-Control-Allow-Origin: http://localhost:8080');
 //header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 //header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept');
@@ -46,5 +49,6 @@ $router->add('api/{controller}/{id:\d+}/{action}');
 
 $router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
 
-
+\App\Models\Log\log::setLog(['error' => 'error']);
+exit;
 $router->dispatch($_SERVER['QUERY_STRING']);

@@ -35,7 +35,7 @@ class Database
      * Show or hide error messages on screen
      * @var boolean
      */
-    const SHOW_ERRORS = true;
+    const SHOW_ERRORS = false;
 
     static function settings()
     {

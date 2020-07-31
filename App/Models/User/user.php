@@ -32,9 +32,9 @@ class user
         {
             $user = new DB();
 
-            $user_id = $user->insert($insert);
+            $getId = $user->insert($insert);
 
-            return $user_id;
+            return $getId;
         }
 
         static function __validateOfIndexAction(&$requestObject, \Interfaces\Services\ServiceResultInterface &$serviceResult)

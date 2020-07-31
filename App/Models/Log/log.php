@@ -83,45 +83,52 @@ class log
 
     static function setLog(array $param = null)
     {
+        $log = ROOT . '/logs/' . date('Y-m-d') . '.txt';
+        ini_set('error_log', $log);
+        $message = "Error: '" . isset($param['error'])? $param['error']: ' '  . "'";
+//        $message .= " Exception '" . isset($param['exception'])? $param['exception']: ' ' . "'";
+//        $message .= "return '" . isset($param['return'])? $param['return']: ' ' . "'";
 
-        if (self::checkTableExist() && !self::$break) {
+        error_log($message);
 
-            self::$break = true;
-
-            $DatabaseLog = (new DB())
-                ->select([
-                    'error',
-                    'exception',
-                    '`return`',
-                ])
-                ->where('log_id', '=', self::getId())
-                ->fetch();
-
-            $update = [];
-
-            if (isset($param['error'])) {
-                $update['error'] = (trim($DatabaseLog['error']) === '') ? $param['error'] : $DatabaseLog['error'] . "\r\n" . $param['error'];
-            }
-
-            if (isset($param['exception'])) {
-                $update['exception'] = (trim($DatabaseLog['exception']) === '') ? $param['exception'] : $DatabaseLog['exception'] . "\r\n" . $param['exception'];
-            }
-
-            if (isset($param['return'])) {
-                $update['`return`'] = $param['return'];
-            }
-
-            (new DB())
-                ->where('log_id', '=', self::getId())
-                ->update(array_merge(
-                        [
-                            'runtime' => 0
-                        ],
-                        $update
-                    )
-                );
-
-        }
+//        if (self::checkTableExist() && !self::$break) {
+//
+//            self::$break = true;
+//
+//            $DatabaseLog = (new DB())
+//                ->select([
+//                    'error',
+//                    'exception',
+//                    '`return`',
+//                ])
+//                ->where('log_id', '=', self::getId())
+//                ->fetch();
+//
+//            $update = [];
+//
+//            if (isset($param['error'])) {
+//                $update['error'] = (trim($DatabaseLog['error']) === '') ? $param['error'] : $DatabaseLog['error'] . "\r\n" . $param['error'];
+//            }
+//
+//            if (isset($param['exception'])) {
+//                $update['exception'] = (trim($DatabaseLog['exception']) === '') ? $param['exception'] : $DatabaseLog['exception'] . "\r\n" . $param['exception'];
+//            }
+//
+//            if (isset($param['return'])) {
+//                $update['`return`'] = $param['return'];
+//            }
+//
+//            (new DB())
+//                ->where('log_id', '=', self::getId())
+//                ->update(array_merge(
+//                        [
+//                            'runtime' => 0
+//                        ],
+//                        $update
+//                    )
+//                );
+//
+//        }
     }
 
     static function setException($level, $message)
